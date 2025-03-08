@@ -3,8 +3,10 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, StatusBar, Activit
 import { Picker } from '@react-native-picker/picker';
 import LanguageDropdown from '../../../Components/NotificationHeader';
 import SearchComponent from '../../../Components/SearchComponent';
+import { useRouter } from 'expo-router';
 
 const FormScreen = () => {
+  const router = useRouter();
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState({
@@ -101,7 +103,14 @@ const FormScreen = () => {
           />
 
           {/* Submit Button */}
-          <TouchableOpacity style={styles.submitButton}>
+          <TouchableOpacity 
+          style={styles.submitButton}
+          onPress={() => {
+            if (isFormFilled) {
+              router.push('homeAddress');
+            }
+          }}
+          >
             <Text style={styles.submitText}>Submit</Text>
           </TouchableOpacity>
         </View>
@@ -184,12 +193,11 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 8,
+    borderRadius: 20,
     marginTop: 10,
   },
   submitText: {
     fontSize: 16,
-    fontWeight: 'bold',
     color: '#000',
   },
 });
