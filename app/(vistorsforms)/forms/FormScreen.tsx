@@ -17,6 +17,11 @@ const FormScreen = () => {
   });
   const [loading, setLoading] = useState(true);
 
+  // Input states
+  const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+
   // Fetch country data from REST API
   useEffect(() => {
     const fetchCountries = async () => {
@@ -44,6 +49,9 @@ const FormScreen = () => {
     fetchCountries();
   }, []);
 
+  // Check if all inputs are filled
+  const isFormFilled = fullName.trim() !== '' && phoneNumber.trim() !== '' && email.trim() !== '';
+
   return (
     <View style={styles.screen}>
       <StatusBar backgroundColor="#fff" barStyle="dark-content" />
@@ -66,6 +74,8 @@ const FormScreen = () => {
             style={styles.input}
             placeholder="Enter recipient full name"
             placeholderTextColor="#A0A0A0"
+            value={fullName}
+            onChangeText={setFullName}
           />
 
           {/* Mobile Number */}
@@ -90,6 +100,8 @@ const FormScreen = () => {
               placeholder="Enter recipient phone number"
               placeholderTextColor="#A0A0A0"
               keyboardType="phone-pad"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
             />
           </View>
 
@@ -100,22 +112,24 @@ const FormScreen = () => {
             placeholder="Enter recipient email address"
             placeholderTextColor="#A0A0A0"
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
           />
 
           {/* Submit Button */}
-          <TouchableOpacity 
-          style={styles.submitButton}
-          onPress={() => {
-            if (isFormFilled) {
-              router.push('homeAddress');
-            }
-          }}
+          <TouchableOpacity
+            style={[styles.submitButton, isFormFilled && styles.activeSubmitButton]}
+            disabled={!isFormFilled}
+            onPress={() => {
+              if (isFormFilled) {
+                router.push('../forms/HomeAddress');
+              }
+            }}
           >
-            <Text style={styles.submitText}>Submit</Text>
+            <Text style={[styles.submitText, isFormFilled && styles.activeSubmitText]}>Submit</Text>
           </TouchableOpacity>
         </View>
       )}
-
     </View>
   );
 };
@@ -137,14 +151,14 @@ const styles = StyleSheet.create({
     top: 10,
     left: 0,
     right: 0,
-    zIndex: 10, 
+    zIndex: 10,
   },
   formContainer: {
     marginTop: 10,
     padding: 16,
   },
   hiddenForm: {
-    display: 'none', 
+    display: 'none',
   },
   title: {
     fontSize: 18,
@@ -173,8 +187,8 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   flag: {
-    fontSize: 20,
-    marginRight: 8,
+    fontSize: 17,
+    marginRight: 2,
   },
   picker: {
     height: 40,
@@ -189,15 +203,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   submitButton: {
-    backgroundColor: '#D0D0D0',
+    backgroundColor: '#D0D0D0', // Default grey
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
     marginTop: 10,
   },
+  activeSubmitButton: {
+    backgroundColor: '#356C9D', // Active blue when inputs are filled
+  },
   submitText: {
     fontSize: 16,
-    color: '#000',
+    fontWeight: 'light',
+    color: '#000', // Default black text
+  },
+  activeSubmitText: {
+    color: '#FFFFFF', // White text when active
   },
 });
