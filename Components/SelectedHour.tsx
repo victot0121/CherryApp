@@ -1,29 +1,32 @@
-import React, { useState } from "react";
+// app/forms/SelectedHour.tsx
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
+import AntDesign from '@expo/vector-icons/AntDesign';
 import Fontisto from '@expo/vector-icons/Fontisto';
-import { useRouter } from 'expo-router';
-import { useLocalSearchParams } from "expo-router";
+import { useRouter, useLocalSearchParams } from 'expo-router';
 
-interface DatePickerComponentsProps {
+
+
+interface SelectedHourProps {
     title: string;
     placeholder: string;
 }
 
-const DatePickerComponent: React.FC<DatePickerComponentsProps> = ({ title, placeholder }) => {
+const SelectedHour: React.FC<SelectedHourProps> = ({ title, placeholder }) => {
     const router = useRouter();
-    const params = useLocalSearchParams();
+    const { selectedTime } = useLocalSearchParams(); // Get selected time from ModalHour
+    const [time, setTime] = useState(selectedTime || placeholder); // Maintain local state
 
-    const [selectedDate, setSelectedDate] = useState<string>("");
+    useEffect(() => {
+        if (selectedTime) {
+            setTime(selectedTime);
+        }
+    }, [selectedTime]);
+
 
     const openModal = () => {
-        router.push({ pathname: "forms/ModalScreen" });
+        router.push({ pathname: 'forms/ModalHour', params: { prevTime: selectedTime || placeholder } });
     };
-
-    React.useEffect(() => {
-        if (params.confirmed === "true" && params.start && params.end) {
-            setSelectedDate(`${params.start} - ${params.end}`);
-        }
-    }, [params.start, params.end, params.confirmed]);
 
     return (
         <View style={styles.container}>
@@ -33,11 +36,11 @@ const DatePickerComponent: React.FC<DatePickerComponentsProps> = ({ title, place
                     style={styles.input}
                     keyboardType="default"
                     editable={false}
-                    placeholder={selectedDate || placeholder}
+                    value={time}
                 />
-                <View style={styles.buttons}>
+                <View style={styles.buttons} >
                     <TouchableOpacity onPress={openModal}>
-                        <Fontisto name="date" size={24} color="black" />
+                        <AntDesign name="clockcircleo" size={24} color="black" />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -45,7 +48,7 @@ const DatePickerComponent: React.FC<DatePickerComponentsProps> = ({ title, place
     );
 };
 
-export default DatePickerComponent;
+export default SelectedHour;
 
 const styles = StyleSheet.create({
     container: {
@@ -86,3 +89,4 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 });
+
