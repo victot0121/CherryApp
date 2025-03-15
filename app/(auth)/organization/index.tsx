@@ -1,11 +1,11 @@
 import {
     View, Text, StyleSheet, StatusBar, SafeAreaView,
-    ScrollView, TouchableOpacity, Alert
+    ScrollView, TouchableOpacity, Alert, Platform
 } from 'react-native';
 import React, { useState } from 'react';
 import { useRouter, Link } from 'expo-router';
-import Ionicons from '@expo/vector-icons/Ionicons';
 import CustomInput from '../../../Components/CustomInput';
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 
 
 
@@ -26,7 +26,7 @@ const Organization = () => {
 
     // Validation for enabling the Sign Up button
     const isFormValid =
-        firstName && lastName && address && companyName && sex && dateOfBirth && email && password && confirmPassword && password === confirmPassword;
+        firstName && lastName && address && companyName  && email && password && confirmPassword && password === confirmPassword;
 
     const handleContinue = () => {
         if (!isFormValid) {
@@ -80,19 +80,6 @@ const Organization = () => {
                     onChangeText={setCompanyName}
                 />
                 <CustomInput
-                    label="Date of Birth"
-                    placeholder="Select date"
-                    isDate
-                    value={dateOfBirth}
-                    onChangeText={setDateOfBirth}
-                />
-                <CustomInput
-                    label="Sex"
-                    placeholder="Enter Your Gender"
-                    value={sex}
-                    onChangeText={setSex}
-                />
-                <CustomInput
                     label="Email Address"
                     placeholder="Enter your email"
                     keyboardType="email-address"
@@ -127,6 +114,34 @@ const Organization = () => {
                         Continue
                     </Text>
                 </TouchableOpacity>
+
+                {/* Play Store / App Store Button */}
+                <View style={styles.orContainer}>
+                    <View style={styles.line} />
+                    <Text style={styles.text}>OR</Text>
+                    <View style={styles.line} />
+                </View>
+
+                {/* Google Sign In Button */}
+                <TouchableOpacity style={styles.googleButton}>
+                    <AntDesign name="google" size={20} color="#EA4335" />
+                    <Text style={styles.googleText}>Sign in with Google</Text>
+                </TouchableOpacity>
+
+                {/* Store Button (Play Store for Android, App Store for iOS) */}
+                <View style={styles.storeButtons}>
+                    {Platform.OS === "android" ? (
+                        <TouchableOpacity style={styles.storeButton}>
+                            <Ionicons name="logo-google-playstore" size={30} color="#000" />
+                            <Text style={styles.googleText}>Sign in with playstore</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity style={styles.storeButton}>
+                            <Ionicons name="logo-apple" size={30} color="#000" />
+                            <Text style={styles.googleText}>Sign in with apple</Text>
+                        </TouchableOpacity>
+                    )}
+                </View>
 
                 <View style={styles.SigninLinkContainer}>
                     <Text>Already have an account?  <Link href="../../(signIn)/siginPage"><Text style={styles.blueLink}>Sign In</Text></Link></Text>
@@ -172,15 +187,15 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         backgroundColor: "#D3D3D3",
         alignItems: "center",
-        marginTop: 30,
+        marginTop: 15,
         alignSelf: "center",
     },
     continueButtonActive: {
         backgroundColor: "#356C9D",
     },
     continueText: {
-        fontSize: 20,
-        fontWeight: "600",
+        fontSize: 15,
+        fontWeight: "400",
         color: "#6D6D6D",
     },
     continueTextActive: {
@@ -193,7 +208,27 @@ const styles = StyleSheet.create({
     blueLink: {
         color: "#356C9D",
         fontWeight: "600",  // Make the link bold and underlined.
-    }
+    },
+    orContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 16,
+    },
+    line: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#D1D5DB', // Equivalent to bg-gray-300
+    },
+    text: {
+        marginHorizontal: 8, // Equivalent to mx-2
+        color: '#6B7280', // Equivalent to text-gray-500
+    },
+    googleButton: { flexDirection: "row", alignItems: "center", padding: 10, width: "100%", justifyContent: "center" },
+    googleText: { fontSize: 16, marginLeft: 10, color: "#333" },
+    storeButtons: { flexDirection: "row", marginTop: 15, alignItems: "center", padding: 10, borderRadius: 30, width: "100%", justifyContent: "center" },
+    storeButton: { marginHorizontal: 10, padding: 10, alignItems: "center", flexDirection: "row" },
+
+
 });
 
 

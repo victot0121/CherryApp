@@ -16,7 +16,7 @@ const ModalHour = () => {
     const [selectedTime, setSelectedTime] = useState(prevTime || "12.00 PM");
 
     const handleConfirm = () => {
-        router.replace({ pathname: "forms/HomeAddress", params: { selectedTime } }); // Ensure correct redirection
+        router.replace({ pathname: "forms/homeAddress", params: { selectedTime } }); // Ensure correct redirection
     };
 
     return (

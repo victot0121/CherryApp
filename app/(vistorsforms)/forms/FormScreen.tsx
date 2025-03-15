@@ -122,7 +122,7 @@ const FormScreen = () => {
             disabled={!isFormFilled}
             onPress={() => {
               if (isFormFilled) {
-                router.push('../forms/HomeAddress');
+                router.push('../forms/homeAddress');
               }
             }}
           >
