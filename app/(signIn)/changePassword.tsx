@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StatusBar, ScrollView, StyleSheet, SafeAreaView,  Alert } from 'react-native'
+import { View, Text, TouchableOpacity, StatusBar, ScrollView, StyleSheet, SafeAreaView, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { useRouter } from 'expo-router'
 import { AntDesign } from '@expo/vector-icons'
@@ -11,7 +11,7 @@ const changePassword = () => {
     // State for input fields
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    
+
 
     // Validation for enabling the Sign Up button
     const isFormValid =

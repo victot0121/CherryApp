@@ -104,7 +104,7 @@ const forgetPassword = () => {
             {/* Verification Success Modal */}
             <Modal visible={isVerified} transparent animationType="fade">
                 <View style={styles.modalContainer}>
-                    
+
                     <View style={styles.modalContent}>
                         <Text style={styles.modalTitle}>Code Sent!</Text>
                         <Text style={styles.modalText}>We’ve sent the password to john***@gmail.com</Text>
@@ -113,7 +113,7 @@ const forgetPassword = () => {
                             onPress={
                                 () => {
                                     setIsVerified(false);
-                                    router.push("changePassword");
+                                    router.push("enterTokenScreen");
                                 }
                             }
                         >
