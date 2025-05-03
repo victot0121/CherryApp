@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, StatusBar, ActivityIndicator, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import LanguageDropdown from '../../../Components/NotificationHeader';
-import { useRouter,  useLocalSearchParams } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import Logo from '../../../assets/profile.png'
 import { Ionicons } from "@expo/vector-icons";
 import NumberOfPeople from '../../../Components/NumberOfPeople';
@@ -19,9 +19,10 @@ const HomeAddress = () => {
 
     const [numPersons, setNumPersons] = useState("00");
 
+
     // Input states
     const [fullName, setFullName] = useState('');
-   
+
 
     return (
         <View style={styles.container}>
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     },
     submitText: {
         fontSize: 16,
-        color: '#000', 
+        color: '#000',
     },
 
 })
